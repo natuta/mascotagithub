@@ -1,3 +1,6 @@
-from vista.MascotaVista import MascotaVista
+from vista.MascotaVistaTkinter import MascotaVista
+from controlador.MascotaControlador import MascotaControlador
 
-mascotaVista = MascotaVista()
+if __name__ == "__main__":
+    vista = MascotaVista()  
+    controlador = MascotaControlador(vista)  # Pasar la instancia de MascotaVista al crear MascotaControlador

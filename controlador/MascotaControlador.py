@@ -7,37 +7,30 @@ class MascotaControlador:
         self.mascota_vista = mascota_vista
 
     def listar(self):
-        # Listar todas las mascotas
         mascotas = self.mascota_modelo.listar()
         self.mascota_vista.mostrar_lista_mascota(mascotas)
-        self.mascota_vista.mostrar_menu()
 
-    def mostrar(self):
-        # Mostrar los detalles de una mascota
-        id = self.mascota_vista.obtener_id()
+    def mostrar(self, id):
         mascota = self.mascota_modelo.buscar(id)
         if mascota is not None:
             self.mascota_vista.mostrar_mascota(mascota)
-        self.mascota_vista.mostrar_menu()
 
-    def agregar(self):
-        # Agregar una nueva mascota
-        datos_mascota = self.mascota_vista.obtener_datos_mascota()
-        self.mascota_modelo.guardar(*datos_mascota)
-        self.mascota_vista.mostrar_mensaje("La mascota se agregó correctamente.")
-        self.mascota_vista.mostrar_menu()
+    def agregar(self, nombre, especie, raza, color, peso, persona):
+        self.mascota_modelo.guardar(nombre, especie, raza, color, peso, persona)
+    # Resto del código...
+        self.mascota_vista.mostrar_mensaje("La información se guardó correctamente.")
+        self.mascota_vista.limpiar_formulario()
+        self.listar()  # Después de agregar, volvemos a listar las mascotas actualizadas
 
-    def modificar(self):
-        # Modificar los detalles de una mascota existente
-        id = self.mascota_vista.obtener_id()
-        datos_mascota = self.mascota_vista.obtener_datos_mascota_modificar()
-        self.mascota_modelo.modificar(id, *datos_mascota)
-        self.mascota_vista.mostrar_mensaje("La información de la mascota se modificó correctamente.")
-        self.mascota_vista.mostrar_menu()
 
-    def eliminar(self):
-        # Eliminar una mascota
-        id = self.mascota_vista.obtener_id()
+    def modificar(self, id):
+        mascota = self.mascota_vista.obtener_datos_mascota_modificar()
+        self.mascota_modelo.modificar(mascota[0], mascota[1], mascota[2], mascota[3])
+        self.mascota_vista.mostrar_mensaje("La información se modificó correctamente.")
+        self.mascota_vista.mostrar_lista_mascota()
+
+    def eliminar(self, id):
         self.mascota_modelo.eliminar(id)
-        self.mascota_vista.mostrar_mensaje("La mascota se eliminó correctamente.")
-        self.mascota_vista.mostrar_menu()
+        self.mascota_vista.mostrar_mensaje("Se eliminó correctamente.")
+        self.mascota_vista.mostrar_lista_mascota()
+        self.mascota_vista.limpiar_formulario()
