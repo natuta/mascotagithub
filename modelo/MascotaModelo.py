@@ -39,9 +39,12 @@ class MascotaModelo:
         except FileNotFoundError:
             self.__lista = []
 
+    
+
     def listar(self):
-        self.__cargar_lista()
+        self.__cargar_lista()  # Llama a __cargar_lista() para cargar la lista de mascotas
         return self.__lista
+
 
     def buscar(self, id):
         self.__cargar_lista()
@@ -55,9 +58,16 @@ class MascotaModelo:
         self.__lista.append(mascota)
         self.__guardar_lista()
 
+    def obtener_proximo_id(self):
+        self.__cargar_lista()
+        if self.__lista:
+            ultimo_id = max(mascota.id for mascota in self.__lista)
+            return ultimo_id + 1
+        else:
+            return 1
+
 
     def modificar(self, id, nombre, especie, raza, color, peso, persona):
-        self.__cargar_lista()
         for mascota in self.__lista:
             if mascota.id == id:
                 mascota.nombre = nombre
@@ -69,11 +79,12 @@ class MascotaModelo:
                 self.__guardar_lista()
                 return
 
+
     def eliminar(self, id):
-        self.__cargar_lista()
         for mascota in self.__lista:
             if mascota.id == id:
                 self.__lista.remove(mascota)
                 self.__guardar_lista()
-                self.__cargar_lista()
                 return
+
+
